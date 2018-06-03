@@ -1,0 +1,4 @@
+rm -rf ~/.vimswap
+rm -rf ~/.vimviews
+mkdir -p ~/.vimswap
+mkdir -p ~/.vimviews

@@ -1,0 +1,311 @@
+" This is leoatchina's vim config forked from https://github.com/spf13/spf13-vim
+" Sincerely thank him for his great job, and I have made some change according to own requires.
+"
+"                    __ _ _____              _
+"         ___ _ __  / _/ |___ /      __   __(_)_ __ ___
+"        / __| '_ \| |_| | |_ \ _____\ \ / /| | '_ ` _ \
+"        \__ \ |_) |  _| |___) |_____|\ V / | | | | | | |
+"        |___/ .__/|_| |_|____/        \_/  |_|_| |_| |_|
+"            |_|
+" You can find spf13's origin config  at http://spf13.com
+" Identify platform
+silent function! OSX()
+    return has('macunix')
+endfunction
+silent function! LINUX()
+    return has('unix') && !has('macunix') && !has('win32unix')
+endfunction
+silent function! WINDOWS()
+    return  (has('win32') || has('win64'))
+endfunction
+" Basics
+if !WINDOWS()
+    set shell=/bin/sh
+    set term=xterm-256color
+else
+    set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+    set term=win32
+    set guifont=YaHei\ Consolas\ Hybrid:h11
+endif
+" plug install path
+if has('nvim')
+    let $PLUG_PATH = '~/.nvim/plug'
+else
+    if has("gui_running")
+        let $PLUG_PATH = '~/.gvim/plug'
+    else
+        let $PLUG_PATH = '~/.vim/plug'
+    endif
+endif
+call plug#begin($PLUG_PATH)
+" General
+Plug 'mhinz/vim-startify'
+Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-commentary'
+Plug 'mbbill/undotree'
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'easymotion/vim-easymotion'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'flazz/vim-colorschemes'
+if executable('git')
+    Plug 'tpope/vim-fugitive'
+    Plug 'Xuyuanp/nerdtree-git-plugin'
+endif
+if executable('ctags')
+    Plug 'majutsushi/tagbar'
+endif
+" python support
+if has('python3') && executable('python3')
+    let g:python_version = 3
+elseif has('python') && executable('python')
+    let g:python_version = 2
+else
+    let g:python_version = 0
+endif
+if g:python_version > 0
+    Plug 'vim-voom/VOoM'
+endif
+" In your .vimrc.local file
+" list only the plugin groups you will use
+if !exists('g:spf13_plug_groups')
+    let g:spf13_plug_groups=['smartcomplete', 'php', 'javascript', 'html','airline']
+endif
+" remap c-f/b to nop in normal/visual mode, use as alternative of leadkey
+nmap <C-f> <Nop>
+vmap <C-f> <Nop>
+nmap <C-b> <Nop>
+vmap <C-b> <Nop>
+" input method
+if count(g:spf13_plug_groups, 'pinyin') || count(g:spf13_plug_groups, 'wubi')
+    Plug 'leoatchina/ywvim'
+endif
+" biosyntax
+if count(g:spf13_plug_groups, 'bio')
+    Plug 'bioSyntax/bioSyntax-vim'
+endif
+" external search method
+if executable('ag') || executable('ack') || executable('rg') || executable('pt')
+    Plug 'dyng/ctrlsf.vim'
+else
+    nmap <C-f>s :vimgrep<Space>
+endif
+Plug 'brooth/far.vim'
+Plug 'terryma/vim-multiple-cursors'
+" signs
+Plug 'rhysd/conflict-marker.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'bling/vim-bufferline'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'mhinz/vim-signify'
+Plug 'tamlok/vim-markdown'
+Plug 'junegunn/vim-easy-align'
+" airline
+if count(g:spf13_plug_groups, 'airline')
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+endif
+" FIXME: mabe not support shell
+" shell
+if count(g:spf13_plug_groups, 'shell') && !has('nvim')
+    Plug 'shougo/vimproc.vim'
+    Plug 'shougo/vimshell.vim'
+endif
+" PHP
+if count(g:spf13_plug_groups, 'php')
+    Plug 'arnaud-lb/vim-php-namespace'
+endif
+" Python
+if count(g:spf13_plug_groups, 'python') && g:python_version > 0
+    " when use pymode , shoud pip/pip3 install pylama
+    Plug 'python-mode/python-mode'
+    Plug 'hdima/python-syntax'
+endif
+" Perl
+if count(g:spf13_plug_groups, 'perl')
+    Plug 'vim-perl/vim-perl'
+endif
+" Javascript
+if count(g:spf13_plug_groups, 'javascript')
+    Plug 'elzr/vim-json'
+    Plug 'pangloss/vim-javascript'
+    Plug 'heavenshell/vim-jsdoc'
+endif
+" Go
+if count(g:spf13_plug_groups, 'go')
+    Plug 'fatih/vim-go',{'do':':GoUpdateBinaries'}
+    Plug 'garyburd/go-explorer'
+    if has('nvim')
+        Plug 'jodosha/vim-godebug'
+    endif
+endif
+" HTML
+if count(g:spf13_plug_groups, 'html')
+    Plug 'hail2u/vim-css3-syntax'
+    Plug 'gorodinskiy/vim-coloresque'
+    Plug 'tpope/vim-haml'
+    Plug 'mattn/emmet-vim'
+endif
+" leaderF and ctrlP
+if g:python_version > 0 && (version > 704 || has('nvim'))&& (WINDOWS() && executable('gcc') || !WINDOWS())
+    if WINDOWS()
+        Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+    else
+        Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+    endif
+else
+    Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'tacahiroy/ctrlp-funky'
+endif
+
+" complete
+if version > 703
+    let g:completable = 0
+    " vim version
+    if has('nvim') || version>799
+        let g:vim_advance = 1
+        if count(g:spf13_plug_groups, 'syntax')
+            Plug 'w0rp/ale'
+        endif
+        Plug 'skywind3000/asyncrun.vim'
+    else
+        let g:vim_advance = 0
+        " install run and syntax tools
+        if count(g:spf13_plug_groups, 'syntax')
+            Plug 'vim-syntastic/syntastic'
+        endif
+        Plug 'thinca/vim-quickrun'
+    endif
+    " YCM for the first
+    if count(g:spf13_plug_groups, 'youcompleteme')
+        if executable('cmake')
+            let g:completable = 1
+        else
+            echoe "Inorder to use YCM , you should intall `cmake` first"
+        endif
+    elseif count(g:spf13_plug_groups, 'asyncomplete')
+        if has('timers') && g:vim_advance
+            let g:completable = 2
+        else
+            echoe "asyncomplete need vim8/neovim with timers support!"
+        endif
+    endif
+
+    if g:completable == 0
+        if g:vim_advance
+            if count(g:spf13_plug_groups, 'deoplete')
+                if g:python_version == 3 && has('timers')
+                    let g:completable = 3
+                else
+                    echoe "deoplete need nvim or vim8 with python3 and timers support!"
+                endif
+            elseif count(g:spf13_plug_groups, 'completor')
+                if g:python_version > 0 && !has('nvim')
+                    let g:completable = 4
+                else
+                    echoe "completor does not support nvim, need vim8 with python2 or python3 support"
+                endif
+            elseif count(g:spf13_plug_groups, 'neocomplete')
+                if has('lua')
+                    let g:completable = 5
+                else
+                    echoe "neocomplete need lua support!"
+                endif
+            elseif count(g:spf13_plug_groups, 'neocomplcache')
+                let g:completable = 6
+            " smart select a complete plugin
+            elseif count(g:spf13_plug_groups, 'smartcomplete')
+                if g:python_version == 3 && has('timers')
+                    let g:completable = 3
+                elseif g:python_version > 0 && !has('nvim')
+                    let g:completable = 4
+                elseif has('lua')
+                    let g:completable = 5
+                else
+                    let g:completable = 6
+                endif
+            endif
+        else
+            if count(g:spf13_plug_groups, 'neocomplete')
+                if has('lua')
+                    let g:completable = 5
+                else
+                    echoe "neocomplete need lua support!"
+                endif
+            elseif count(g:spf13_plug_groups, 'neocomplcache')
+                let g:completable = 6
+            elseif count(g:spf13_plug_groups, 'smartcomplete')
+                if has('lua')
+                    let g:completable = 5
+                else
+                    let g:completable = 6
+                endif
+            endif
+        endif
+    endif
+    " install snippets plugins
+    if g:completable > 0
+        " use honza's snippets collection"
+        Plug 'honza/vim-snippets'
+        if count(g:spf13_plug_groups,'ultisnips')
+            let g:use_ultisnips = 1
+            Plug 'SirVer/ultisnips'
+        elseif count(g:spf13_plug_groups,'neosnippet')
+            let g:use_ultisnips = 0
+            Plug 'Shougo/neosnippet'
+            Plug 'Shougo/neosnippet-snippets'
+        " ultisnips not support neovim
+        elseif !has('nvim') && g:python_version > 0
+            let g:use_ultisnips = 1
+            Plug 'SirVer/ultisnips'
+        else
+            let g:use_ultisnips = 0
+            Plug 'Shougo/neosnippet'
+            Plug 'Shougo/neosnippet-snippets'
+        endif
+    endif
+    " install complete plugins
+    if g:completable == 1
+        Plug 'Valloric/YouCompleteMe'
+    elseif g:completable == 2
+        Plug 'prabirshrestha/asyncomplete.vim'
+        Plug 'prabirshrestha/async.vim'
+        Plug 'prabirshrestha/vim-lsp'
+        Plug 'prabirshrestha/asyncomplete-lsp.vim'
+        Plug 'prabirshrestha/asyncomplete-buffer.vim'
+        Plug 'prabirshrestha/asyncomplete-file.vim'
+        Plug 'prabirshrestha/asyncomplete-tags.vim'
+        if g:use_ultisnips && g:python_version == 3
+            Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
+        else
+            let g:use_ultisnips = 0
+            Plug 'prabirshrestha/asyncomplete-neosnippet.vim'
+        endif
+    elseif g:completable == 3
+        Plug 'Shougo/deoplete.nvim'
+        if !has('nvim')
+            Plug 'roxma/vim-hug-neovim-rpc'
+            Plug 'roxma/nvim-yarp'
+        endif
+        if count(g:spf13_plug_groups, 'go')
+            Plug 'zchee/deoplete-go'
+        endif
+    elseif g:completable == 4
+        Plug 'maralla/completor.vim'
+        if !g:use_ultisnips
+            Plug 'maralla/completor-neosnippet'
+        endif
+    elseif g:completable == 5
+        Plug 'Shougo/neocomplete.vim'
+    elseif g:completable == 6
+        Plug 'Shougo/neocomplcache.vim'
+        if g:use_ultisnips == 1
+            Plug 'JazzCore/neocomplcache-ultisnips'
+        endif
+    endif
+else
+    echoe "In order to have grammar check and snippet, you should update to vim7.4+ or neovim!!"
+endif
+
+call plug#end()
