@@ -30,7 +30,11 @@ endfunction
 " Basics
 if !WINDOWS()
     set shell=/bin/sh
-    set term=xterm-256color
+    if !has("gui")
+        if !has('nvim')
+            set term=$TERM
+        endif
+    endif
 else
     set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
     set term=win32
