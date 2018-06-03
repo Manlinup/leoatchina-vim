@@ -77,7 +77,7 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
 - 修改了安装代码，变成直接从clone的目录中软链接到用户目录下，**不再支持XP**
 - 按自己习惯修改了大量快捷键
 - 去除了原来定义的一些函数
-- 加入了6种补全插件：`youcompleteme`,`deoplete`,`completor`,`asyncomplete`,`neocomplete`,`neocomplcache`,默认会在后5种中选择一种。
+- 加入了6种补全插件：`youcompleteme`,`asyncomplete`,`deoplete`,`completor`,`neocomplete`,`neocomplcache`,默认会在后4种中选择一种。
 
 ## 基本快捷键
 * `<Leader>`键改为空格键,这个在键盘上最大的按键就有了更强的作用;
@@ -85,10 +85,16 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
 * `C-l`,`C-f`变成了两个`先导键`，其中`C-l`+a代替`C-a`,`C-l`+x代替`C-x`
 * `~`作为进入`ex`模式的快捷键,`Q`键map为`退出当前buffer`
 * `F1`: 为`:h `，方便启动帮助
+* `F2`: 执行 `:Far`
+* `F3`: 执行 `<C-x>`
+* `F4`: 执行 `<C-a>`
 * `F5`: 运行脚本（python、perl、c等）或 `<Leader>R`;
+    * 高低版本还有差别
 * `F6`: 打开关闭代码折叠 或 `<Leader>fd`
 * `F7`: 打开关闭换行 或 `<Leader>fr`
 * `F8`: 打开关闭搜索高亮 或 `<Leader>fh`
+* `F9`: `qfix`窗口切换
+* `F10`: Voom窗口
 * `F11`: 全屏切换,如果是windows下的gvim,要把本目录下的`gvim_fullscreen.dll`放到`gvim`的安装目录下，此时<S+F11>为切换透明度
 * `F12`: 切换paste模式,或者`<Leader>fp`
 * 在`Visual`模式下按`.`为退出`Visual`模式
@@ -104,8 +110,8 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
   nnoremap <Leader>tn :tabnext<CR> #后标签
   nnoremap <Leader>-  :tabm -1<CR>
   nnoremap <Leader><Tab>  :tabm +1<CR>
-  nnoremap <LocalLeader>- :tabfirst<CR>
-  nnoremap <LocalLeader><Tab> :tablast<CR>
+  nnoremap <Leader><Leader>- :tabfirst<CR>
+  nnoremap <Leader><Leader><Tab> :tablast<CR>
   nnoremap <Leader>te :tabe<Space>
   nnoremap <Leader>ts :tab split<CR>
   nnoremap <Leader>tS :tabs<CR>
@@ -128,9 +134,6 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
 ```
 * 其他一些快捷键
 ```
-  " buffer switch
-  nnoremap ) :bn<CR>
-  nnoremap ( :bp<CR>
   " 定义快捷键保存当前窗口内容
   nmap <Leader>w :w<CR>
   nmap <Leader>W :wq!<CR>
@@ -153,10 +156,11 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
   " Visual shifting (does not exit Visual mode)
   vnoremap < <gv
   vnoremap > >gv
-  " Ctrl-m for switch between brackets
-  map <C-m> %
+  nnoremap < <<
+  nnoremap > >>
+  nnormemap _ %
+  vnormemap _ %
 ```
-
 
 ## 插件系统
 我使用[vim-plug](https://github.com/junegunn/vim-plug)代替了spf13的[vundle](https://github.com/VundleVim/Vundle.vim),安装速度快了数倍。高级功能还在调试中
@@ -236,8 +240,6 @@ undotree顾名思义,增强版的回退插件，快捷键`<Leader>u`
     Comments out the selected lines with a pretty block formatted layout.
   * `[count]<Leader>cy` **|NERDComYankComment|**
     Same as <Leader>cc except that the commented line(s) are yanked first.
-  * `<Leader>c$` **|NERDComEOLComment|**
-    Comments the current line from the cursor to the end of line.
   * `<Leader>cA` **|NERDComAppendComment|**
     Adds comment delimiters to the end of line and goes into insert mode between them.
   * **|NERDComInsertComment|**
@@ -249,9 +251,6 @@ undotree顾名思义,增强版的回退插件，快捷键`<Leader>u`
     Same as **|NERDComComment|** except that the delimiters are aligned down the left side (`<Leader>cl`) or both sides (`<Leader>cb`).
   * `[count]<Leader>cu` **|NERDComUncommentLine|**
     Uncomments the selected line(s).
-
-
-
 
 ### [ctrlp](https://github.com/ctrlpvim/ctrlp.vim)
 杀手级插件,引用网上的一段话对它的介绍
@@ -296,7 +295,7 @@ undotree顾名思义,增强版的回退插件，快捷键`<Leader>u`
     -----------
     s   - in visual mode, add a surrounding
     S   - in visual mode, add a surrounding but place text on new line + indent it
-    Insert mode "不建议使用
+    Insert mode "不建议使用,特别是ctrl-s会引起屏幕halt的情况下
     -----------
     <CTRL-s> - in insert mode, add a surrounding
     <CTRL-s><CTRL-s> - in insert mode, add a new line + surrounding + indent
