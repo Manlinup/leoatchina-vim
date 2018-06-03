@@ -18,15 +18,6 @@ endfunction
 silent function! WINDOWS()
     return  (has('win32') || has('win64'))
 endfunction
-" Basics
-if !WINDOWS()
-    set shell=/bin/sh
-    set term=xterm-256color
-else
-    set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
-    set term=win32
-    set guifont=YaHei\ Consolas\ Hybrid:h11
-endif
 " plug install path
 if has('nvim')
     let $PLUG_PATH = '~/.nvim/plug'
