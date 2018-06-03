@@ -19,6 +19,7 @@ REM    limitations under the License.
 call del "%HOME%\.vimrc"
 call del "%HOME%\_vimrc"
 call del "%HOME%\.vimrc.plugs"
+call del "%HOME%\.vimrc.md"
 
 call mklink "%HOME%\.vimrc"                 "%APP_PATH%\.vimrc"
 call mklink "%HOME%\_vimrc"                 "%APP_PATH%\.vimrc"
@@ -60,5 +61,7 @@ IF NOT EXIST "%HOME%\.vim\autoload" (
 ) ELSE (
     call cd "%HOME%\.vim\autoload"
     call git pull
-    call cd "%APP_PATH%"
 )
+
+call vim  +BundleInstall! +BundleClean +qall
+call gvim  +BundleInstall! +BundleClean +qall

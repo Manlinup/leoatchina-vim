@@ -15,7 +15,7 @@
 ############################  SETUP PARAMETERS
 app_name='spf13-vim-leoatchina'
 [ -z "$APP_PATH" ] && APP_PATH="$PWD"
-[ -z "$REPO_URL" ] && REPO_URL='https://github.com/leoatchina/spf13-vim-leoatchina.git'
+[ -z "$REPO_URL" ] && REPO_URL='https://github.com/leoatchina/leoatchina-vim.git'
 [ -z "$REPO_BRANCH" ] && REPO_BRANCH='master'
 debug_mode='0'
 update_setting='0'
@@ -86,7 +86,7 @@ create_symlinks() {
         lnif "$source_path/.vimrc"          "$target_path/.config/nvim/init.vim"
     fi
     ret="$?"
-    success "Setting up vim symlinks."
+    success "Setted up vim symlinks."
     debug
 }
 
@@ -121,7 +121,7 @@ fi
 ret=0
 if [ "$update_setting" -eq '1' ];then
     git pull
-    success "Update to the latest version of spf13-vim-leoatchina"
+    success "Update to the latest version of leoatchina-vim"
 fi
 
 if [ -f $HOME/.vimrc.local ];then
@@ -147,4 +147,4 @@ if program_exists "nvim"; then
 fi
 
 msg "\nThanks for installing leoatchina's vim config forked from http://vim.spf13.com"
-msg "© `date +%Y` https://github.com/leoatchina/spf13-vim-leoatchina"
+msg "© `date +%Y` https://github.com/leoatchina/leoatchina-vim"

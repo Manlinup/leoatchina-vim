@@ -600,7 +600,7 @@ if isdirectory(expand($PLUG_PATH."/vim-startify"))
         \ '+----------------------------------------------------------+',
         \ '|  Welcome to use leoatchina vim config forked from spf13  |',
         \ '|                                                          |',
-        \ '|  https://github.com/leoatchina/spf13-vim-leoathina       |',
+        \ '|  https://github.com/leoatchina/leoatchina-vim            |',
         \ '|                                                          |',
         \ '|  https://github.com/spf13/spf13-vim                      |',
         \ '+----------------------------------------------------------+',

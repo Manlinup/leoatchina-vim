@@ -1,6 +1,6 @@
 # leoatchina的vim配置文件
 This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim).I sincerely thank him for great job. To meet my needs,I have changed lots of settings and plugins.
- You can find spf13's origin config at http://spf13.com
+ You can find spf13's origin config at http://vim.spf13.com or https://github.com/spf13/spf13-vim
 
 
 [spf13]()对他自己作品的介绍
@@ -10,7 +10,7 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
 
 ## 背景
 本人是生信工程师,主要使用的语言是`python`,`perl`,`shell`,经常要ssh到远程服务器上写代码,因此学习了vim,后来发现了[spf13-vim:steve francia's vim distribution](https://github.com/spf13/spf13-vim),大大提高了写代码的效率。
-但是,原配置仍然有很多插件和配置不符合我的需要,因此,fork后进行了大量的修改.请访问[leoatchina的vim配置文件](https://github.com/leoatchina/spf13-vim-leoatchina).由于本人水平所限,一定有很多错误和bug,望各位指正.
+但是,原配置仍然有很多插件和配置不符合我的需要,因此,fork后进行了大量的修改.请访问[leoatchina的vim配置文件](https://github.com/leoatchina/leoatchina-vim).由于本人水平所限,一定有很多错误和bug,望各位指正.
 **注意**使本配置文件后可能会影响vim运行流畅度,介意者要通过学习后,关闭某些特性以提高速度.
 
 ## 对使用者的要求
@@ -30,20 +30,23 @@ This is leoatchina's vim config forked from [spf13-vim:steve francia's vim distr
 需要系统里安装好`git`,`curl`
 
 ```bash
-  git clone https://github.com/leoatchina/spf13-vim-leoatchina.git
-  cd spf13-vim-leoatchina
+  git clone https://github.com/leoatchina/leoatchina-vim.git
+  cd leoatchina-vim
   ./install.sh   第一次安装要按`y`
 ```
 
 ### windows下的安装
 ```
 点击setup.cmd
+同时 git clone https://github.com/leoatchina/tools-leoatchina-vim.git
+安装相关的字体,并把exe文件复制到vim安装目录
 ```
 
 ### 升级到最新版本
 ```bash
   vim +PlugUpdate
   或者在vim里直接  :PlugUpdate
+  或者在clone下来的目录下   ./install.sh  然后按 y
 ```
 
 ## 一些功能
