@@ -259,7 +259,7 @@ if version > 703
     endif
     " install complete plugins
     if g:completable == 1
-        Plug 'Valloric/YouCompleteMe'
+        Plug 'Valloric/YouCompleteMe',{ 'do' : './install.py --gocode-completer --tern-completer' }
     elseif g:completable == 2
         Plug 'prabirshrestha/asyncomplete.vim'
         Plug 'prabirshrestha/async.vim'
