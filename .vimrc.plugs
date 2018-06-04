@@ -80,7 +80,8 @@ endif
 if executable('ag') || executable('ack') || executable('rg') || executable('pt')
     Plug 'dyng/ctrlsf.vim'
 else
-    nmap <C-f>s :vimgrep<Space>
+    Plug 'wsdjeg/FlyGrep.vim'
+    nmap <C-f>s :FlyGrep<Cr>
 endif
 Plug 'brooth/far.vim'
 Plug 'terryma/vim-multiple-cursors'
